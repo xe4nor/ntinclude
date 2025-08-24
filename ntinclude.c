@@ -70,7 +70,7 @@ pNtTestAlert NtTestAlert = NULL;
 pNtContinue NtContinue = NULL;
 pNtRaiseHardError NtRaiseHardError = NULL;
 
-#define RESOLVE(name) name = (decltype(name))GetProcAddress(ntdll, #name); \
+#define RESOLVE(name) *(FARPROC*)&name = GetProcAddress(ntdll, #name); \
     if (!name) printf("[!] %s nicht gefunden!\n", #name);
 
 BOOL ResolveNtFunctions() {
