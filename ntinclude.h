@@ -478,39 +478,190 @@ typedef NTSTATUS (NTAPI *pNtQueryObject)(
 
 //
 
-typedef NTSTATUS (NTAPI *pNtLoadDll)(PWSTR,PULONG,PUNICODE_STRING,PHANDLE);
-typedef NTSTATUS (NTAPI *pNtUnloadDll)(HANDLE);
-typedef NTSTATUS (NTAPI *pNtQuerySection)(HANDLE,ULONG,PVOID,SIZE_T,PSIZE_T);
+typedef NTSTATUS (NTAPI *pNtLoadDll)(
+    PWSTR,
+    PULONG,
+    PUNICODE_STRING,
+    PHANDLE
+    );
+
+typedef NTSTATUS (NTAPI *pNtUnloadDll)(
+    HANDLE
+    );
+
+typedef NTSTATUS (NTAPI *pNtQuerySection)(
+    HANDLE,
+    ULONG,
+    PVOID,
+    SIZE_T,
+    PSIZE_T
+    );
 
 //
 
-typedef NTSTATUS (NTAPI *pNtCreateFile)(PHANDLE,ACCESS_MASK,POBJECT_ATTRIBUTES,PIO_STATUS_BLOCK,PLARGE_INTEGER,ULONG,ULONG,ULONG,ULONG,PVOID,ULONG);
-typedef NTSTATUS (NTAPI *pNtOpenFile)(PHANDLE,ACCESS_MASK,POBJECT_ATTRIBUTES,PIO_STATUS_BLOCK,ULONG,ULONG);
-typedef NTSTATUS (NTAPI *pNtReadFile)(HANDLE,HANDLE,PIO_APC_ROUTINE,PVOID,PIO_STATUS_BLOCK,PVOID,ULONG,PLARGE_INTEGER,PULONG);
-typedef NTSTATUS (NTAPI *pNtWriteFile)(HANDLE,HANDLE,PIO_APC_ROUTINE,PVOID,PIO_STATUS_BLOCK,PVOID,ULONG,PLARGE_INTEGER,PULONG);
-typedef NTSTATUS (NTAPI *pNtDeleteFile)(POBJECT_ATTRIBUTES);
-typedef NTSTATUS (NTAPI *pNtQueryInformationFile)(HANDLE,PIO_STATUS_BLOCK,PVOID,ULONG,ULONG);
-typedef NTSTATUS (NTAPI *pNtSetInformationFile)(HANDLE,PIO_STATUS_BLOCK,PVOID,ULONG,ULONG);
-typedef NTSTATUS (NTAPI *pNtQueryAttributesFile)(POBJECT_ATTRIBUTES,PFILE_BASIC_INFORMATION);
+typedef NTSTATUS (NTAPI *pNtCreateFile)(
+    PHANDLE,
+    ACCESS_MASK,
+    POBJECT_ATTRIBUTES,
+    PIO_STATUS_BLOCK,
+    PLARGE_INTEGER,
+    ULONG,
+    ULONG,
+    ULONG,
+    ULONG,
+    PVOID,
+    ULONG
+    );
+
+typedef NTSTATUS (NTAPI *pNtOpenFile)(
+    PHANDLE,
+    ACCESS_MASK,
+    POBJECT_ATTRIBUTES,
+    PIO_STATUS_BLOCK,
+    ULONG,
+    ULONG
+    );
+
+typedef NTSTATUS (NTAPI *pNtReadFile)(
+    HANDLE,
+    HANDLE,
+    PIO_APC_ROUTINE,
+    PVOID,
+    PIO_STATUS_BLOCK,
+    PVOID,
+    ULONG,
+    PLARGE_INTEGER,
+    PULONG
+    );
+
+typedef NTSTATUS (NTAPI *pNtWriteFile)(
+    HANDLE,
+    HANDLE,
+    PIO_APC_ROUTINE,
+    PVOID,
+    PIO_STATUS_BLOCK,
+    PVOID,
+    ULONG,
+    PLARGE_INTEGER,
+    PULONG
+    );
+
+typedef NTSTATUS (NTAPI *pNtDeleteFile)(
+    POBJECT_ATTRIBUTES
+    );
+
+typedef NTSTATUS (NTAPI *pNtQueryInformationFile)(
+    HANDLE,
+    PIO_STATUS_BLOCK,
+    PVOID,
+    ULONG,
+    ULONG
+    );
+
+typedef NTSTATUS (NTAPI *pNtSetInformationFile)(
+    HANDLE,
+    PIO_STATUS_BLOCK,
+    PVOID,
+    ULONG,
+    ULONG
+    );
+
+typedef NTSTATUS (NTAPI *pNtQueryAttributesFile)(
+    POBJECT_ATTRIBUTES,
+    PFILE_BASIC_INFORMATION
+    );
 
 //
 
-typedef NTSTATUS (NTAPI *pNtCreateKey)(PHANDLE,ACCESS_MASK,POBJECT_ATTRIBUTES,ULONG,PUNICODE_STRING,ULONG,PULONG);
-typedef NTSTATUS (NTAPI *pNtOpenKey)(PHANDLE,ACCESS_MASK,POBJECT_ATTRIBUTES);
-typedef NTSTATUS (NTAPI *pNtDeleteKey)(HANDLE);
-typedef NTSTATUS (NTAPI *pNtSetValueKey)(HANDLE,PUNICODE_STRING,ULONG,ULONG,PVOID,ULONG);
-typedef NTSTATUS (NTAPI *pNtQueryValueKey)(HANDLE,PUNICODE_STRING,ULONG,PVOID,ULONG,PULONG);
+typedef NTSTATUS (NTAPI *pNtCreateKey)(
+    PHANDLE,
+    ACCESS_MASK,
+    POBJECT_ATTRIBUTES,
+    ULONG,
+    PUNICODE_STRING,
+    ULONG,
+    PULONG
+    );
+
+typedef NTSTATUS (NTAPI *pNtOpenKey)(
+    PHANDLE,
+    ACCESS_MASK,
+    POBJECT_ATTRIBUTES
+    );
+
+typedef NTSTATUS (NTAPI *pNtDeleteKey)(
+    HANDLE
+    );
+
+typedef NTSTATUS (NTAPI *pNtSetValueKey)(
+    HANDLE,
+    PUNICODE_STRING,
+    ULONG,
+    ULONG,
+    PVOID,
+    ULONG
+    );
+
+typedef NTSTATUS (NTAPI *pNtQueryValueKey)(
+    HANDLE,
+    PUNICODE_STRING,
+    ULONG,
+    PVOID,
+    ULONG,
+    PULONG
+    );
 
 //
 
-typedef NTSTATUS (NTAPI *pNtQuerySystemInformation)(ULONG,PVOID,ULONG,PULONG);
-typedef NTSTATUS (NTAPI *pNtSetSystemInformation)(ULONG,PVOID,ULONG);
-typedef NTSTATUS (NTAPI *pNtDelayExecution)(BOOLEAN,PLARGE_INTEGER);
-typedef NTSTATUS (NTAPI *pNtWaitForSingleObject)(HANDLE,BOOLEAN,PLARGE_INTEGER);
-typedef NTSTATUS (NTAPI *pNtWaitForMultipleObjects)(ULONG,PHANDLE,BOOLEAN,BOOLEAN,PLARGE_INTEGER);
-typedef NTSTATUS (NTAPI *pNtTestAlert)(VOID);
-typedef NTSTATUS (NTAPI *pNtContinue)(PCONTEXT,BOOLEAN);
-typedef NTSTATUS (NTAPI *pNtRaiseHardError)(NTSTATUS,ULONG,ULONG,PULONG_PTR,PULONG,PULONG);
+typedef NTSTATUS (NTAPI *pNtQuerySystemInformation)(
+    ULONG,
+    PVOID,
+    ULONG,
+    PULONG
+    );
+
+typedef NTSTATUS (NTAPI *pNtSetSystemInformation)(
+    ULONG,
+    PVOID,
+    ULONG
+    );
+
+typedef NTSTATUS (NTAPI *pNtDelayExecution)(
+    BOOLEAN,
+    PLARGE_INTEGER
+    );
+
+typedef NTSTATUS (NTAPI *pNtWaitForSingleObject)(
+    HANDLE,
+    BOOLEAN,
+    PLARGE_INTEGER
+    );
+
+typedef NTSTATUS (NTAPI *pNtWaitForMultipleObjects)(
+    ULONG,
+    PHANDLE,
+    BOOLEAN,
+    BOOLEAN,
+    PLARGE_INTEGER
+    );
+
+typedef NTSTATUS (NTAPI *pNtTestAlert)(
+    VOID
+    );
+
+typedef NTSTATUS (NTAPI *pNtContinue)(
+    PCONTEXT,
+    BOOLEAN
+    );
+
+typedef NTSTATUS (NTAPI *pNtRaiseHardError)(
+    NTSTATUS,
+    ULONG,
+    ULONG,
+    PULONG_PTR,
+    PULONG,
+    PULONG
+    );
 
 //
 
