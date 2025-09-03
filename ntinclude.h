@@ -446,13 +446,35 @@ typedef NTSTATUS (NTAPI *pNtAdjustPrivilegesToken)(
     PULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtQueryInformationToken)(HANDLE,ULONG,PVOID,ULONG,PULONG);
+typedef NTSTATUS (NTAPI *pNtQueryInformationToken)(
+    HANDLE,
+    ULONG,
+    PVOID,
+    ULONG,
+    PULONG
+    );
 
-typedef NTSTATUS (NTAPI *pNtDuplicateObject)(HANDLE,HANDLE,PHANDLE,HANDLE,ACCESS_MASK,ULONG,ULONG);
+typedef NTSTATUS (NTAPI *pNtDuplicateObject)(
+    HANDLE,
+    HANDLE,
+    PHANDLE,
+    HANDLE,
+    ACCESS_MASK,
+    ULONG,
+    ULONG
+    );
 
-typedef NTSTATUS (NTAPI *pNtClose)(HANDLE);
+typedef NTSTATUS (NTAPI *pNtClose)(
+    HANDLE
+    );
 
-typedef NTSTATUS (NTAPI *pNtQueryObject)(HANDLE,ULONG,PVOID,ULONG,PULONG);
+typedef NTSTATUS (NTAPI *pNtQueryObject)(
+    HANDLE,
+    ULONG,
+    PVOID,
+    ULONG,
+    PULONG
+    );
 
 //
 
