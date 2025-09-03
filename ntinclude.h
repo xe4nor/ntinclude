@@ -199,12 +199,12 @@ typedef enum _THREADINFOCLASS {
 //Virtueller Speicher
 
 typedef NTSTATUS (NTAPI *pNtAllocateVirtualMemory)(
-    _In_ HANDLE,
-    _Inout_ PVOID*,
-    _In_ ULONG_PTR,
-    _Inout_ PSIZE_T,
-    _In_ ULONG,
-    _In_ ULONG
+    _In_ HANDLE ProcessHandle,
+    _Inout_ PVOID* BaseAddress,
+    _In_ ULONG_PTR ZeroBits,
+    _Inout_ PSIZE_T RegionSize,
+    _In_ ULONG AllocationType,
+    _In_ ULONG PageProtection
     );
 
 typedef NTSTATUS (NTAPI *pNtFreeVirtualMemory)(
