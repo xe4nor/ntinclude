@@ -196,9 +196,30 @@ typedef enum _THREADINFOCLASS {
     MaxThreadInfoClass
 } THREADINFOCLASS;
 
-typedef NTSTATUS (NTAPI *pNtAllocateVirtualMemory)(HANDLE,PVOID*,ULONG_PTR,PSIZE_T,ULONG,ULONG);
-typedef NTSTATUS (NTAPI *pNtFreeVirtualMemory)(HANDLE,PVOID*,PSIZE_T,ULONG);
-typedef NTSTATUS (NTAPI *pNtProtectVirtualMemory)(HANDLE,PVOID*,PSIZE_T,ULONG,PULONG);
+
+typedef NTSTATUS (NTAPI *pNtAllocateVirtualMemory)(
+    HANDLE,
+    PVOID*,
+    ULONG_PTR,
+    PSIZE_T,
+    ULONG,ULONG
+    );
+
+typedef NTSTATUS (NTAPI *pNtFreeVirtualMemory)(
+    HANDLE,
+    PVOID*,
+    PSIZE_T,
+    ULONG
+    );
+
+typedef NTSTATUS (NTAPI *pNtProtectVirtualMemory)(
+    HANDLE,
+    PVOID*,
+    PSIZE_T,
+    ULONG,
+    PULONG
+    );
+
 typedef NTSTATUS (NTAPI *pNtReadVirtualMemory)(HANDLE,PVOID,PVOID,ULONG,PULONG);
 typedef NTSTATUS (NTAPI *pNtWriteVirtualMemory)(HANDLE,PVOID,PVOID,ULONG,PULONG);
 typedef NTSTATUS (NTAPI *pNtQueryVirtualMemory)(HANDLE,PVOID,ULONG,PVOID,SIZE_T,PSIZE_T);
