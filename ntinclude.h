@@ -415,13 +415,43 @@ typedef NTSTATUS (NTAPI *pNtSuspendProcess)(
 
 //
 
-typedef NTSTATUS (NTAPI *pNtOpenProcessToken)(HANDLE,ACCESS_MASK,PHANDLE);
-typedef NTSTATUS (NTAPI *pNtOpenThreadToken)(HANDLE,ACCESS_MASK,BOOLEAN,PHANDLE);
-typedef NTSTATUS (NTAPI *pNtDuplicateToken)(HANDLE,ACCESS_MASK,POBJECT_ATTRIBUTES,BOOLEAN,TOKEN_TYPE,PHANDLE);
-typedef NTSTATUS (NTAPI *pNtAdjustPrivilegesToken)(HANDLE,BOOLEAN,PTOKEN_PRIVILEGES,ULONG,PTOKEN_PRIVILEGES,PULONG);
+typedef NTSTATUS (NTAPI *pNtOpenProcessToken)(
+    HANDLE,
+    ACCESS_MASK,
+    PHANDLE
+    );
+
+typedef NTSTATUS (NTAPI *pNtOpenThreadToken)(
+    HANDLE,
+    ACCESS_MASK,
+    BOOLEAN,
+    PHANDLE
+    );
+
+typedef NTSTATUS (NTAPI *pNtDuplicateToken)(
+    HANDLE,
+    ACCESS_MASK,
+    POBJECT_ATTRIBUTES,
+    BOOLEAN,
+    TOKEN_TYPE,
+    PHANDLE
+    );
+
+typedef NTSTATUS (NTAPI *pNtAdjustPrivilegesToken)(
+    HANDLE,
+    BOOLEAN,
+    PTOKEN_PRIVILEGES,
+    ULONG,
+    PTOKEN_PRIVILEGES,
+    PULONG
+    );
+
 typedef NTSTATUS (NTAPI *pNtQueryInformationToken)(HANDLE,ULONG,PVOID,ULONG,PULONG);
+
 typedef NTSTATUS (NTAPI *pNtDuplicateObject)(HANDLE,HANDLE,PHANDLE,HANDLE,ACCESS_MASK,ULONG,ULONG);
+
 typedef NTSTATUS (NTAPI *pNtClose)(HANDLE);
+
 typedef NTSTATUS (NTAPI *pNtQueryObject)(HANDLE,ULONG,PVOID,ULONG,PULONG);
 
 //
