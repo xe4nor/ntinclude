@@ -204,18 +204,6 @@ typedef enum _THREADINFOCLASS {
 
 //Virtueller Speicher
 
-/**
- * The NtAllocateVirtualMemory routine reserves, commits, or both, a region of pages within the user-mode virtual address space of a specified process.
- *
- * \param ProcessHandle Ein Handle für den Prozess wo das Mapping stattfinden soll.
- * \param BaseAddress A pointer to a variable that will receive the base address of the allocated region of pages. If the initial value is not zero, the region is allocated at the specified virtual address.
- * \param ZeroBits The number of high-order address bits that must be zero in the base address of the section view. This value must be less than 21 and the initial value of BaseAddress must be zero.
- * \param RegionSize A pointer to a variable that will receive the actual size, in bytes, of the allocated region of pages.
- * \param AllocationType A bitmask containing flags that specify the type of allocation to be performed.
- * \param PageProtection A bitmask containing page protection flags that specify the protection desired for the committed region of pages.
- * \return NTSTATUS Successful or errant status.
- * \sa https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-zwallocatevirtualmemory
- */
 typedef NTSTATUS(NTAPI* pNtAllocateVirtualMemory)(
     _In_ HANDLE ProcessHandle,
     _Inout_ PVOID* BaseAddress,
