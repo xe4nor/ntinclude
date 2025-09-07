@@ -1,5 +1,11 @@
 #pragma once
+#define WIN32_NO_STATUS
 #include <Windows.h>
+#include <ntstatus.h>
+
+#ifndef NT_SUCCESS
+#define NT_SUCCESS(Status) (((NTSTATUS)(Status)) >= 0)
+#endif
 
 typedef struct _UNICODE_STRING {
     USHORT Length;
@@ -12,8 +18,8 @@ typedef struct _OBJECT_ATTRIBUTES {
     HANDLE RootDirectory;
     PUNICODE_STRING ObjectName;
     ULONG Attributes;
-    PVOID SecurityDescriptor;        
-    PVOID SecurityQualityOfService;  
+    PVOID SecurityDescriptor;
+    PVOID SecurityQualityOfService;
 } OBJECT_ATTRIBUTES, * POBJECT_ATTRIBUTES;
 
 #define InitializeObjectAttributes(p,n,a,r,s) { \
@@ -210,7 +216,7 @@ typedef enum _THREADINFOCLASS {
  * \return NTSTATUS Successful or errant status.
  * \sa https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-zwallocatevirtualmemory
  */
-typedef NTSTATUS (NTAPI *pNtAllocateVirtualMemory)(
+typedef NTSTATUS(NTAPI* pNtAllocateVirtualMemory)(
     _In_ HANDLE ProcessHandle,
     _Inout_ PVOID* BaseAddress,
     _In_ ULONG_PTR ZeroBits,
@@ -219,14 +225,14 @@ typedef NTSTATUS (NTAPI *pNtAllocateVirtualMemory)(
     _In_ ULONG PageProtection
     );
 
-typedef NTSTATUS (NTAPI *pNtFreeVirtualMemory)(
+typedef NTSTATUS(NTAPI* pNtFreeVirtualMemory)(
     HANDLE,
     PVOID*,
     PSIZE_T,
     ULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtProtectVirtualMemory)(
+typedef NTSTATUS(NTAPI* pNtProtectVirtualMemory)(
     HANDLE,
     PVOID*,
     PSIZE_T,
@@ -234,7 +240,7 @@ typedef NTSTATUS (NTAPI *pNtProtectVirtualMemory)(
     PULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtReadVirtualMemory)(
+typedef NTSTATUS(NTAPI* pNtReadVirtualMemory)(
     HANDLE,
     PVOID,
     PVOID,
@@ -242,7 +248,7 @@ typedef NTSTATUS (NTAPI *pNtReadVirtualMemory)(
     PULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtWriteVirtualMemory)(
+typedef NTSTATUS(NTAPI* pNtWriteVirtualMemory)(
     HANDLE,
     PVOID,
     PVOID,
@@ -250,7 +256,7 @@ typedef NTSTATUS (NTAPI *pNtWriteVirtualMemory)(
     PULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtQueryVirtualMemory)(
+typedef NTSTATUS(NTAPI* pNtQueryVirtualMemory)(
     HANDLE,
     PVOID,
     ULONG,
@@ -259,28 +265,28 @@ typedef NTSTATUS (NTAPI *pNtQueryVirtualMemory)(
     PSIZE_T
     );
 
-typedef NTSTATUS (NTAPI *pNtLockVirtualMemory)(
+typedef NTSTATUS(NTAPI* pNtLockVirtualMemory)(
     HANDLE,
     PVOID*,
     PSIZE_T,
     ULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtUnlockVirtualMemory)(
+typedef NTSTATUS(NTAPI* pNtUnlockVirtualMemory)(
     HANDLE,
     PVOID*,
     PSIZE_T,
     ULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtFlushVirtualMemory)(
+typedef NTSTATUS(NTAPI* pNtFlushVirtualMemory)(
     HANDLE,
     PVOID*,
     PSIZE_T,
     PIO_STATUS_BLOCK
     );
 
-typedef NTSTATUS (NTAPI *pNtMapViewOfSection)(
+typedef NTSTATUS(NTAPI* pNtMapViewOfSection)(
     HANDLE,
     HANDLE,
     PVOID*,
@@ -293,12 +299,12 @@ typedef NTSTATUS (NTAPI *pNtMapViewOfSection)(
     ULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtUnmapViewOfSection)(
+typedef NTSTATUS(NTAPI* pNtUnmapViewOfSection)(
     HANDLE,
     PVOID
     );
 
-typedef NTSTATUS (NTAPI *pNtCreateSection)(
+typedef NTSTATUS(NTAPI* pNtCreateSection)(
     PHANDLE,
     ACCESS_MASK,
     POBJECT_ATTRIBUTES,
@@ -310,7 +316,7 @@ typedef NTSTATUS (NTAPI *pNtCreateSection)(
 
 //Threads
 
-typedef NTSTATUS (NTAPI *pNtCreateThreadEx)(
+typedef NTSTATUS(NTAPI* pNtCreateThreadEx)(
     PHANDLE,
     ACCESS_MASK,
     PVOID,
@@ -324,29 +330,29 @@ typedef NTSTATUS (NTAPI *pNtCreateThreadEx)(
     PVOID
     );
 
-typedef NTSTATUS (NTAPI *pNtSuspendThread)(
+typedef NTSTATUS(NTAPI* pNtSuspendThread)(
     HANDLE,
     PULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtResumeThread)(
+typedef NTSTATUS(NTAPI* pNtResumeThread)(
     HANDLE,
     PULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtTerminateThread)(
+typedef NTSTATUS(NTAPI* pNtTerminateThread)(
     HANDLE,
     NTSTATUS
     );
 
-typedef NTSTATUS (NTAPI *pNtOpenThread)(
+typedef NTSTATUS(NTAPI* pNtOpenThread)(
     PHANDLE,
     ACCESS_MASK,
     POBJECT_ATTRIBUTES,
     PCLIENT_ID
     );
 
-typedef NTSTATUS (NTAPI *pNtQueryInformationThread)(
+typedef NTSTATUS(NTAPI* pNtQueryInformationThread)(
     HANDLE,
     ULONG,
     PVOID,
@@ -354,24 +360,24 @@ typedef NTSTATUS (NTAPI *pNtQueryInformationThread)(
     PULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtSetInformationThread)(
+typedef NTSTATUS(NTAPI* pNtSetInformationThread)(
     HANDLE,
     ULONG,
     PVOID,
     ULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtGetContextThread)(
+typedef NTSTATUS(NTAPI* pNtGetContextThread)(
     HANDLE,
     PCONTEXT
     );
 
-typedef NTSTATUS (NTAPI *pNtSetContextThread)(
+typedef NTSTATUS(NTAPI* pNtSetContextThread)(
     HANDLE,
     PCONTEXT
     );
 
-typedef NTSTATUS (NTAPI *pNtQueueApcThread)(
+typedef NTSTATUS(NTAPI* pNtQueueApcThread)(
     HANDLE,
     PVOID,
     PVOID,
@@ -381,29 +387,29 @@ typedef NTSTATUS (NTAPI *pNtQueueApcThread)(
 
 //Prozesse
 
-typedef NTSTATUS (NTAPI *pNtCreateProcess)(
+typedef NTSTATUS(NTAPI* pNtCreateProcess)(
     PHANDLE,
     ACCESS_MASK,
-    PVOID,HANDLE,
+    PVOID, HANDLE,
     BOOLEAN,
     HANDLE,
     HANDLE,
     HANDLE
     );
 
-typedef NTSTATUS (NTAPI *pNtOpenProcess)(
+typedef NTSTATUS(NTAPI* pNtOpenProcess)(
     PHANDLE,
     ACCESS_MASK,
     POBJECT_ATTRIBUTES,
     PCLIENT_ID
     );
 
-typedef NTSTATUS (NTAPI *pNtTerminateProcess)(
+typedef NTSTATUS(NTAPI* pNtTerminateProcess)(
     HANDLE,
     NTSTATUS
     );
 
-typedef NTSTATUS (NTAPI *pNtQueryInformationProcess)(
+typedef NTSTATUS(NTAPI* pNtQueryInformationProcess)(
     HANDLE,
     ULONG,
     PVOID,
@@ -411,37 +417,37 @@ typedef NTSTATUS (NTAPI *pNtQueryInformationProcess)(
     PULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtSetInformationProcess)(
+typedef NTSTATUS(NTAPI* pNtSetInformationProcess)(
     HANDLE,
     ULONG,
     PVOID,
     ULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtResumeProcess)(
+typedef NTSTATUS(NTAPI* pNtResumeProcess)(
     HANDLE
     );
 
-typedef NTSTATUS (NTAPI *pNtSuspendProcess)(
+typedef NTSTATUS(NTAPI* pNtSuspendProcess)(
     HANDLE
     );
 
 //
 
-typedef NTSTATUS (NTAPI *pNtOpenProcessToken)(
+typedef NTSTATUS(NTAPI* pNtOpenProcessToken)(
     HANDLE,
     ACCESS_MASK,
     PHANDLE
     );
 
-typedef NTSTATUS (NTAPI *pNtOpenThreadToken)(
+typedef NTSTATUS(NTAPI* pNtOpenThreadToken)(
     HANDLE,
     ACCESS_MASK,
     BOOLEAN,
     PHANDLE
     );
 
-typedef NTSTATUS (NTAPI *pNtDuplicateToken)(
+typedef NTSTATUS(NTAPI* pNtDuplicateToken)(
     HANDLE,
     ACCESS_MASK,
     POBJECT_ATTRIBUTES,
@@ -450,7 +456,7 @@ typedef NTSTATUS (NTAPI *pNtDuplicateToken)(
     PHANDLE
     );
 
-typedef NTSTATUS (NTAPI *pNtAdjustPrivilegesToken)(
+typedef NTSTATUS(NTAPI* pNtAdjustPrivilegesToken)(
     HANDLE,
     BOOLEAN,
     PTOKEN_PRIVILEGES,
@@ -459,7 +465,7 @@ typedef NTSTATUS (NTAPI *pNtAdjustPrivilegesToken)(
     PULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtQueryInformationToken)(
+typedef NTSTATUS(NTAPI* pNtQueryInformationToken)(
     HANDLE,
     ULONG,
     PVOID,
@@ -467,7 +473,7 @@ typedef NTSTATUS (NTAPI *pNtQueryInformationToken)(
     PULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtDuplicateObject)(
+typedef NTSTATUS(NTAPI* pNtDuplicateObject)(
     HANDLE,
     HANDLE,
     PHANDLE,
@@ -477,11 +483,11 @@ typedef NTSTATUS (NTAPI *pNtDuplicateObject)(
     ULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtClose)(
+typedef NTSTATUS(NTAPI* pNtClose)(
     HANDLE
     );
 
-typedef NTSTATUS (NTAPI *pNtQueryObject)(
+typedef NTSTATUS(NTAPI* pNtQueryObject)(
     HANDLE,
     ULONG,
     PVOID,
@@ -490,19 +496,19 @@ typedef NTSTATUS (NTAPI *pNtQueryObject)(
     );
 
 //
-
-typedef NTSTATUS (NTAPI *pNtLoadDll)(
+/*
+typedef NTSTATUS(NTAPI* pLdrLoadDll)(
     PWSTR,
     PULONG,
     PUNICODE_STRING,
     PHANDLE
     );
 
-typedef NTSTATUS (NTAPI *pNtUnloadDll)(
+typedef NTSTATUS(NTAPI* pLdrUnloadDll)(
     HANDLE
     );
-
-typedef NTSTATUS (NTAPI *pNtQuerySection)(
+*/
+typedef NTSTATUS(NTAPI* pNtQuerySection)(
     HANDLE,
     ULONG,
     PVOID,
@@ -512,7 +518,7 @@ typedef NTSTATUS (NTAPI *pNtQuerySection)(
 
 //
 
-typedef NTSTATUS (NTAPI *pNtCreateFile)(
+typedef NTSTATUS(NTAPI* pNtCreateFile)(
     PHANDLE,
     ACCESS_MASK,
     POBJECT_ATTRIBUTES,
@@ -526,7 +532,7 @@ typedef NTSTATUS (NTAPI *pNtCreateFile)(
     ULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtOpenFile)(
+typedef NTSTATUS(NTAPI* pNtOpenFile)(
     PHANDLE,
     ACCESS_MASK,
     POBJECT_ATTRIBUTES,
@@ -535,7 +541,7 @@ typedef NTSTATUS (NTAPI *pNtOpenFile)(
     ULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtReadFile)(
+typedef NTSTATUS(NTAPI* pNtReadFile)(
     HANDLE,
     HANDLE,
     PIO_APC_ROUTINE,
@@ -547,7 +553,7 @@ typedef NTSTATUS (NTAPI *pNtReadFile)(
     PULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtWriteFile)(
+typedef NTSTATUS(NTAPI* pNtWriteFile)(
     HANDLE,
     HANDLE,
     PIO_APC_ROUTINE,
@@ -559,11 +565,11 @@ typedef NTSTATUS (NTAPI *pNtWriteFile)(
     PULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtDeleteFile)(
+typedef NTSTATUS(NTAPI* pNtDeleteFile)(
     POBJECT_ATTRIBUTES
     );
 
-typedef NTSTATUS (NTAPI *pNtQueryInformationFile)(
+typedef NTSTATUS(NTAPI* pNtQueryInformationFile)(
     HANDLE,
     PIO_STATUS_BLOCK,
     PVOID,
@@ -571,7 +577,7 @@ typedef NTSTATUS (NTAPI *pNtQueryInformationFile)(
     ULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtSetInformationFile)(
+typedef NTSTATUS(NTAPI* pNtSetInformationFile)(
     HANDLE,
     PIO_STATUS_BLOCK,
     PVOID,
@@ -579,14 +585,14 @@ typedef NTSTATUS (NTAPI *pNtSetInformationFile)(
     ULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtQueryAttributesFile)(
+typedef NTSTATUS(NTAPI* pNtQueryAttributesFile)(
     POBJECT_ATTRIBUTES,
     PFILE_BASIC_INFORMATION
     );
 
 //
 
-typedef NTSTATUS (NTAPI *pNtCreateKey)(
+typedef NTSTATUS(NTAPI* pNtCreateKey)(
     PHANDLE,
     ACCESS_MASK,
     POBJECT_ATTRIBUTES,
@@ -596,17 +602,17 @@ typedef NTSTATUS (NTAPI *pNtCreateKey)(
     PULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtOpenKey)(
+typedef NTSTATUS(NTAPI* pNtOpenKey)(
     PHANDLE,
     ACCESS_MASK,
     POBJECT_ATTRIBUTES
     );
 
-typedef NTSTATUS (NTAPI *pNtDeleteKey)(
+typedef NTSTATUS(NTAPI* pNtDeleteKey)(
     HANDLE
     );
 
-typedef NTSTATUS (NTAPI *pNtSetValueKey)(
+typedef NTSTATUS(NTAPI* pNtSetValueKey)(
     HANDLE,
     PUNICODE_STRING,
     ULONG,
@@ -615,7 +621,7 @@ typedef NTSTATUS (NTAPI *pNtSetValueKey)(
     ULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtQueryValueKey)(
+typedef NTSTATUS(NTAPI* pNtQueryValueKey)(
     HANDLE,
     PUNICODE_STRING,
     ULONG,
@@ -626,31 +632,31 @@ typedef NTSTATUS (NTAPI *pNtQueryValueKey)(
 
 //
 
-typedef NTSTATUS (NTAPI *pNtQuerySystemInformation)(
+typedef NTSTATUS(NTAPI* pNtQuerySystemInformation)(
     ULONG,
     PVOID,
     ULONG,
     PULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtSetSystemInformation)(
+typedef NTSTATUS(NTAPI* pNtSetSystemInformation)(
     ULONG,
     PVOID,
     ULONG
     );
 
-typedef NTSTATUS (NTAPI *pNtDelayExecution)(
+typedef NTSTATUS(NTAPI* pNtDelayExecution)(
     BOOLEAN,
     PLARGE_INTEGER
     );
 
-typedef NTSTATUS (NTAPI *pNtWaitForSingleObject)(
+typedef NTSTATUS(NTAPI* pNtWaitForSingleObject)(
     HANDLE,
     BOOLEAN,
     PLARGE_INTEGER
     );
 
-typedef NTSTATUS (NTAPI *pNtWaitForMultipleObjects)(
+typedef NTSTATUS(NTAPI* pNtWaitForMultipleObjects)(
     ULONG,
     PHANDLE,
     BOOLEAN,
@@ -658,16 +664,16 @@ typedef NTSTATUS (NTAPI *pNtWaitForMultipleObjects)(
     PLARGE_INTEGER
     );
 
-typedef NTSTATUS (NTAPI *pNtTestAlert)(
+typedef NTSTATUS(NTAPI* pNtTestAlert)(
     VOID
     );
 
-typedef NTSTATUS (NTAPI *pNtContinue)(
+typedef NTSTATUS(NTAPI* pNtContinue)(
     PCONTEXT,
     BOOLEAN
     );
 
-typedef NTSTATUS (NTAPI *pNtRaiseHardError)(
+typedef NTSTATUS(NTAPI* pNtRaiseHardError)(
     NTSTATUS,
     ULONG,
     ULONG,
@@ -678,6 +684,14 @@ typedef NTSTATUS (NTAPI *pNtRaiseHardError)(
 
 //
 
+/// Reserviert/committed einen Bereich im virtuellen Adressraum eines Prozesses.
+/// \param ProcessHandle  Zielprozess (z. B. GetCurrentProcess()).
+/// \param BaseAddress    IN/OUT: gewünschte Basisadresse oder NULL → vom System gewählt.
+/// \param ZeroBits       Anzahl High-Order-Nullbits (meist 0).
+/// \param RegionSize     IN/OUT: Größe in Bytes (wird ggf. auf Seitengröße gerundet).
+/// \param AllocationType MEM_COMMIT | MEM_RESERVE | …
+/// \param PageProtection PAGE_READWRITE | …
+/// \return NTSTATUS (NT_SUCCESS(status) bei Erfolg).
 extern pNtAllocateVirtualMemory NtAllocateVirtualMemory;
 extern pNtFreeVirtualMemory NtFreeVirtualMemory;
 extern pNtProtectVirtualMemory NtProtectVirtualMemory;
@@ -725,8 +739,8 @@ extern pNtQueryObject NtQueryObject;
 
 //
 
-extern pNtLoadDll NtLoadDll;
-extern pNtUnloadDll NtUnloadDll;
+//extern pLdrLoadDll LdrLoadDll;
+//extern pLdrUnloadDll LdrUnloadDll;
 extern pNtQuerySection NtQuerySection;
 
 //
