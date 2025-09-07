@@ -42,8 +42,8 @@ pNtDuplicateObject NtDuplicateObject = NULL;
 pNtClose NtClose = NULL;
 pNtQueryObject NtQueryObject = NULL;
 
-pNtLoadDll NtLoadDll = NULL;
-pNtUnloadDll NtUnloadDll = NULL;
+//pLdrLoadDll NtLoadDll = NULL;
+//pLdrUnloadDll NtUnloadDll = NULL;
 pNtQuerySection NtQuerySection = NULL;
 
 pNtCreateFile NtCreateFile = NULL;
@@ -70,12 +70,16 @@ pNtTestAlert NtTestAlert = NULL;
 pNtContinue NtContinue = NULL;
 pNtRaiseHardError NtRaiseHardError = NULL;
 
-#define RESOLVE(name) \ 
-    *(FARPROC *)&name = GetProcAddress(ntdll, #name); \ 
-    if (!(name)) { \ 
-        printf("[!] %s nicht gefunden!\n", #name); \ 
-        return FALSE; \ 
-    }
+#define RESOLVE(name)                                                     \
+    do {                                                                  \
+        name = (p##name)GetProcAddress(ntdll, #name);                     \
+        if (!(name)) {                                                    \
+            printf("[!] %s nicht gefunden!\n", #name);                    \
+            return FALSE;                                                 \
+        }                                                                 \
+    } while (0)
+
+
 
 BOOL ResolveNtFunctions() {
     HMODULE ntdll = GetModuleHandleA("ntdll.dll");
@@ -125,8 +129,8 @@ BOOL ResolveNtFunctions() {
     RESOLVE(NtClose);
     RESOLVE(NtQueryObject);
 
-    RESOLVE(NtLoadDll);
-    RESOLVE(NtUnloadDll);
+    //RESOLVE(LdrLoadDll);
+    //RESOLVE(LdrUnloadDll);
     RESOLVE(NtQuerySection);
 
     RESOLVE(NtCreateFile);
