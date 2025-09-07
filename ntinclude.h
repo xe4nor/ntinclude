@@ -1,5 +1,9 @@
 #pragma once
-#include <Windows.h>
+#include <windows.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef struct _UNICODE_STRING {
     USHORT Length;
@@ -760,3 +764,7 @@ extern pNtContinue NtContinue;
 extern pNtRaiseHardError NtRaiseHardError;
 
 BOOL ResolveNtFunctions();
+
+#ifdef __cplusplus
+}
+#endif
