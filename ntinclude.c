@@ -70,8 +70,12 @@ pNtTestAlert NtTestAlert = NULL;
 pNtContinue NtContinue = NULL;
 pNtRaiseHardError NtRaiseHardError = NULL;
 
-#define RESOLVE(name) *(FARPROC*)&name = GetProcAddress(ntdll, #name); \
-    if (!name) printf("[!] %s nicht gefunden!\n", #name);
+#define RESOLVE(name) \ 
+    *(FARPROC *)&name = GetProcAddress(ntdll, #name); \ 
+    if (!(name)) { \ 
+        printf("[!] %s nicht gefunden!\n", #name); \ 
+        return FALSE; \ 
+    }
 
 BOOL ResolveNtFunctions() {
     HMODULE ntdll = GetModuleHandleA("ntdll.dll");
