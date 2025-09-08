@@ -203,45 +203,75 @@ typedef enum _THREADINFOCLASS {
 } THREADINFOCLASS;
 
 //Virtueller Speicher
-
+/// <summary>
+/// Reserviert oder committed einen Bereich im virtuellen Adressraum eines Prozesses.
+/// </summary>
+/// <param name="HANDLE">
+/// Handle auf den Zielprozess, z.B. von GetCurrentProcess().
+/// </param>
+/// <param name="BaseAddress">
+/// IN/OUT: Adresse, an der der Speicher reserviert werden soll.  
+/// Wenn NULL, wählt das System automatisch einen geeigneten Bereich.
+/// </param>
+/// <param name="ZeroBits">
+/// Anzahl High-Order-Nullbits (normalerweise 0).
+/// </param>
+/// <param name="RegionSize">
+/// IN/OUT: Größe des Bereichs in Bytes.
+/// </param>
+/// <param name="AllocationType">
+/// Typ der Speicherzuweisung (z.B. MEM_COMMIT | MEM_RESERVE).
+/// </param>
+/// <param name="PageProtection">
+/// Schutzrechte für den Speicherbereich (z.B. PAGE_READWRITE).
+/// </param>
+/// <returns>
+/// NTSTATUS Code – NT_SUCCESS(status) bei Erfolg.
+/// </returns>
+/// <remarks>
+/// Weitere Infos:
+/// <see href="">
+/// MSDN-Dokumentation: NtAllocateVirtualMemory
+/// </see>
+/// </remarks>
 typedef NTSTATUS(NTAPI* pNtAllocateVirtualMemory)(
-    _In_ HANDLE ProcessHandle,
+    _In_    HANDLE ProcessHandle,
     _Inout_ PVOID* BaseAddress,
-    _In_ ULONG_PTR ZeroBits,
+    _In_    ULONG_PTR ZeroBits,
     _Inout_ PSIZE_T RegionSize,
-    _In_ ULONG AllocationType,
-    _In_ ULONG PageProtection
+    _In_    ULONG AllocationType,
+    _In_    ULONG PageProtection
     );
 
 typedef NTSTATUS(NTAPI* pNtFreeVirtualMemory)(
-    HANDLE,
-    PVOID*,
-    PSIZE_T,
-    ULONG
+   _In_     HANDLE ProcessHandle,
+   _Inout_  PVOID* BaseAddress,
+   _Inout_  PSIZE_T RegionSize,
+   _In_     ULONG FreeType
     );
 
 typedef NTSTATUS(NTAPI* pNtProtectVirtualMemory)(
-    HANDLE,
-    PVOID*,
-    PSIZE_T,
-    ULONG,
-    PULONG
+    _In_    HANDLE ProcessHandle,
+    _Inout_ PVOID* BaseAddress,
+    _Inout_ PSIZE_T RegionSize,
+    _In_    ULONG NewProtection,
+    _Out_   PULONG OldProtection
     );
 
 typedef NTSTATUS(NTAPI* pNtReadVirtualMemory)(
-    HANDLE,
-    PVOID,
-    PVOID,
-    ULONG,
-    PULONG
+    _In_      HANDLE ProcessHandle,
+    _In_opt_  PVOID BaseAddress,
+    _Out_     PVOID Buffer,
+    _In_      ULONG NumberOfBytesToRead,
+    _Out_opt_ PULONG NumberOfBytesRead
     );
 
 typedef NTSTATUS(NTAPI* pNtWriteVirtualMemory)(
-    HANDLE,
-    PVOID,
-    PVOID,
-    ULONG,
-    PULONG
+    _In_      HANDLE ProcessHandle,
+    _Out_opt_ PVOID BaseAddress,
+    _In_      PVOID Buffer,
+    _In_      ULONG NumberOfBytesToWrite,
+    _Out_opt_ PULONG NumberOfBytesWritten
     );
 
 typedef NTSTATUS(NTAPI* pNtQueryVirtualMemory)(
@@ -671,15 +701,37 @@ typedef NTSTATUS(NTAPI* pNtRaiseHardError)(
     );
 
 //
-
-/// Reserviert/committed einen Bereich im virtuellen Adressraum eines Prozesses.
-/// \param ProcessHandle  Zielprozess (z. B. GetCurrentProcess()).
-/// \param BaseAddress    IN/OUT: gewünschte Basisadresse oder NULL → vom System gewählt.
-/// \param ZeroBits       Anzahl High-Order-Nullbits (meist 0).
-/// \param RegionSize     IN/OUT: Größe in Bytes (wird ggf. auf Seitengröße gerundet).
-/// \param AllocationType MEM_COMMIT | MEM_RESERVE | …
-/// \param PageProtection PAGE_READWRITE | …
-/// \return NTSTATUS (NT_SUCCESS(status) bei Erfolg).
+/// <summary>
+/// Reserviert oder committed einen Bereich im virtuellen Adressraum eines Prozesses.
+/// </summary>
+/// <param name=" _In_ Handle ProcessHandle:">
+/// Handle auf den Zielprozess, z.B. von GetCurrentProcess().
+/// </param>
+/// <param name="_Inout_ PVOID* BaseAddress:">
+/// Adresse, an der der Speicher reserviert werden soll.  
+///     Wenn NULL, wählt das System automatisch einen geeigneten Bereich.
+/// </param>
+/// <param name="_In_ ULONG_PTR ZeroBits:">
+/// Anzahl High-Order-Nullbits (normalerweise 0).
+/// </param>
+/// <param name="_Inout_ PSIZE_T RegionSize:">
+/// Größe des Bereichs in Bytes.
+/// </param>
+/// <param name="_In_ ULONG AllocationType:">
+/// Typ der Speicherzuweisung (z.B. MEM_COMMIT | MEM_RESERVE).
+/// </param>
+/// <param name="_In_ ULONG PageProtection:">
+/// Schutzrechte für den Speicherbereich (z.B. PAGE_READWRITE).
+/// </param>
+/// <returns>
+/// NTSTATUS Code – NT_SUCCESS(status) bei Erfolg.
+/// </returns>
+/// <remarks>
+/// Weitere Infos:
+/// <see href="https://learn.microsoft.com/en-us/windows/win32/api/winnt/nf-winnt-ntallocatevirtualmemory">
+/// MSDN-Dokumentation: NtAllocateVirtualMemory
+/// </see>
+/// </remarks>
 extern pNtAllocateVirtualMemory NtAllocateVirtualMemory;
 extern pNtFreeVirtualMemory NtFreeVirtualMemory;
 extern pNtProtectVirtualMemory NtProtectVirtualMemory;
