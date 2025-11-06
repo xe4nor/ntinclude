@@ -242,7 +242,15 @@ typedef NTSTATUS(NTAPI* pNtAllocateVirtualMemory)(
     _In_    ULONG AllocationType,
     _In_    ULONG PageProtection
     );
-
+/**
+ * Die NtFreeVirtualMemory gibt den allokierten Speicher wieder frei.
+ *
+ * \param ProcessHandle Ein Handle zu dem Prozess dessen speicher freigegeben werden soll.
+ * \param BaseAddress Ein Pointer zu der Basis Adresse von der region von "Pages" die freigegeben werden sollen.
+ * \param RegionSize Ein Pointer zu einer Variable die die Größe der Freigabe berücksichtigt.
+ * \param FreeType Der Typ der Freigabe hier kann der Parameter MEM_DECOMMIT oder MEM_RELEASE sein.
+ * \return NTSTATUS 
+ */
 typedef NTSTATUS(NTAPI* pNtFreeVirtualMemory)(
    _In_     HANDLE ProcessHandle,
    _Inout_  PVOID* BaseAddress,
@@ -712,6 +720,15 @@ typedef NTSTATUS(NTAPI* pNtRaiseHardError)(
  * \return NTSTATUS Successful or errant status.
  */
 extern pNtAllocateVirtualMemory NtAllocateVirtualMemory;
+/**
+ * Die NtFreeVirtualMemory gibt den allokierten Speicher wieder frei.
+ *
+ * \param ProcessHandle Ein Handle zu dem Prozess dessen speicher freigegeben werden soll.
+ * \param BaseAddress Ein Pointer zu der Basis Adresse von der region von "Pages" die freigegeben werden sollen.
+ * \param RegionSize Ein Pointer zu einer Variable die die Größe der Freigabe berücksichtigt.
+ * \param FreeType Der Typ der Freigabe hier kann der Parameter MEM_DECOMMIT oder MEM_RELEASE sein.
+ * \return NTSTATUS 
+ */
 extern pNtFreeVirtualMemory NtFreeVirtualMemory;
 extern pNtProtectVirtualMemory NtProtectVirtualMemory;
 extern pNtReadVirtualMemory NtReadVirtualMemory;
