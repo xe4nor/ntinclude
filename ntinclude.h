@@ -700,38 +700,17 @@ typedef NTSTATUS(NTAPI* pNtRaiseHardError)(
     PULONG
     );
 
-//
-/// <summary>
-/// Reserviert oder committed einen Bereich im virtuellen Adressraum eines Prozesses.
-/// </summary>
-/// <param name=" _In_ Handle ProcessHandle:">
-/// Handle auf den Zielprozess, z.B. von GetCurrentProcess().
-/// </param>
-/// <param name="_Inout_ PVOID* BaseAddress:">
-/// Adresse, an der der Speicher reserviert werden soll.  
-///     Wenn NULL, wählt das System automatisch einen geeigneten Bereich.
-/// </param>
-/// <param name="_In_ ULONG_PTR ZeroBits:">
-/// Anzahl High-Order-Nullbits (normalerweise 0).
-/// </param>
-/// <param name="_Inout_ PSIZE_T RegionSize:">
-/// Größe des Bereichs in Bytes.
-/// </param>
-/// <param name="_In_ ULONG AllocationType:">
-/// Typ der Speicherzuweisung (z.B. MEM_COMMIT | MEM_RESERVE).
-/// </param>
-/// <param name="_In_ ULONG PageProtection:">
-/// Schutzrechte für den Speicherbereich (z.B. PAGE_READWRITE).
-/// </param>
-/// <returns>
-/// NTSTATUS Code – NT_SUCCESS(status) bei Erfolg.
-/// </returns>
-/// <remarks>
-/// Weitere Infos:
-/// <see href="https://learn.microsoft.com/en-us/windows/win32/api/winnt/nf-winnt-ntallocatevirtualmemory">
-/// MSDN-Dokumentation: NtAllocateVirtualMemory
-/// </see>
-/// </remarks>
+/**
+ * Reserviert oder committed einen Bereich im virtuellen Adressraum eines Prozesses.
+ *
+ * \param ProcessHandle Ein Handle für den Prozess wo das Mapping stattfinden soll.
+ * \param BaseAddress A pointer to a variable that will receive the base address of the allocated region of pages. If the initial value is not zero, the region is allocated at the specified virtual address.
+ * \param ZeroBits The number of high-order address bits that must be zero in the base address of the section view. This value must be less than 21 and the initial value of BaseAddress must be zero.
+ * \param RegionSize A pointer to a variable that will receive the actual size, in bytes, of the allocated region of pages.
+ * \param AllocationType A bitmask containing flags that specify the type of allocation to be performed.
+ * \param PageProtection A bitmask containing page protection flags that specify the protection desired for the committed region of pages.
+ * \return NTSTATUS Successful or errant status.
+ */
 extern pNtAllocateVirtualMemory NtAllocateVirtualMemory;
 extern pNtFreeVirtualMemory NtFreeVirtualMemory;
 extern pNtProtectVirtualMemory NtProtectVirtualMemory;
