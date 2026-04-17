@@ -70,6 +70,9 @@ pNtTestAlert NtTestAlert = NULL;
 pNtContinue NtContinue = NULL;
 pNtRaiseHardError NtRaiseHardError = NULL;
 
+pRtlEthernetAddressToStringA RtlEthernetAddressToStringA = NULL;
+pRtlEthernetStringToAddressA RtlEthernetStringToAddressA = NULL;
+
 #define RESOLVE(name)                                                     \
     do {                                                                  \
         name = (p##name)GetProcAddress(ntdll, #name);                     \
@@ -157,5 +160,7 @@ BOOL ResolveNtFunctions() {
     RESOLVE(NtContinue);
     RESOLVE(NtRaiseHardError);
 
+    RESOLVE(RtlEthernetAddressToStringA);
+    RESOLVE(RtlEthernetStringToAddressA);
     return TRUE;
 }
