@@ -1,4 +1,5 @@
 #pragma once
+#pragma once
 #define WIN32_NO_STATUS
 #include <Windows.h>
 #include <ntstatus.h>
@@ -59,6 +60,10 @@ typedef struct _FILE_BASIC_INFORMATION {
     LARGE_INTEGER ChangeTime;
     ULONG FileAttributes;
 } FILE_BASIC_INFORMATION, * PFILE_BASIC_INFORMATION;
+
+typedef struct _DL_EUI48 { 
+    BYTE Byte[6]; 
+} DL_EUI48, * PDL_EUI48;
 
 typedef enum _PROCESSINFOCLASS {
     ProcessBasicInformation = 0,
@@ -249,13 +254,13 @@ typedef NTSTATUS(NTAPI* pNtAllocateVirtualMemory)(
  * \param BaseAddress Ein Pointer zu der Basis Adresse von der region von "Pages" die freigegeben werden sollen.
  * \param RegionSize Ein Pointer zu einer Variable die die Größe der Freigabe berücksichtigt.
  * \param FreeType Der Typ der Freigabe hier kann der Parameter MEM_DECOMMIT oder MEM_RELEASE sein.
- * \return NTSTATUS 
+ * \return NTSTATUS
  */
 typedef NTSTATUS(NTAPI* pNtFreeVirtualMemory)(
-   _In_     HANDLE ProcessHandle,
-   _Inout_  PVOID* BaseAddress,
-   _Inout_  PSIZE_T RegionSize,
-   _In_     ULONG FreeType
+    _In_     HANDLE ProcessHandle,
+    _Inout_  PVOID* BaseAddress,
+    _Inout_  PSIZE_T RegionSize,
+    _In_     ULONG FreeType
     );
 
 typedef NTSTATUS(NTAPI* pNtProtectVirtualMemory)(
@@ -708,6 +713,17 @@ typedef NTSTATUS(NTAPI* pNtRaiseHardError)(
     PULONG
     );
 
+typedef PSTR(NTAPI* pRtlEthernetAddressToStringA)(
+    const DL_EUI48* Addr,
+    PSTR S
+    );
+
+typedef NTSTATUS(NTAPI* pRtlEthernetStringToAddressA)(
+    PCSTR    S,
+    PCSTR* Terminator,
+    DL_EUI48* Addr
+);
+
 /// <summary>
 /// Reserviert oder committed einen Bereich im virtuellen Adressraum eines Prozesses.
 /// </summary>
@@ -747,7 +763,7 @@ extern pNtAllocateVirtualMemory NtAllocateVirtualMemory;
  * \param BaseAddress Ein Pointer zu der Basis Adresse von der region von "Pages" die freigegeben werden sollen.
  * \param RegionSize Ein Pointer zu einer Variable die die Größe der Freigabe berücksichtigt.
  * \param FreeType Der Typ der Freigabe hier kann der Parameter MEM_DECOMMIT oder MEM_RELEASE sein.
- * \return NTSTATUS 
+ * \return NTSTATUS
  */
 extern pNtFreeVirtualMemory NtFreeVirtualMemory;
 extern pNtProtectVirtualMemory NtProtectVirtualMemory;
@@ -828,5 +844,10 @@ extern pNtWaitForMultipleObjects NtWaitForMultipleObjects;
 extern pNtTestAlert NtTestAlert;
 extern pNtContinue NtContinue;
 extern pNtRaiseHardError NtRaiseHardError;
+
+//
+
+extern pRtlEthernetAddressToStringA RtlEthernetAddressToStringA;
+extern pRtlEthernetStringToAddressA RtlEthernetStringToAddressA;
 
 BOOL ResolveNtFunctions();
